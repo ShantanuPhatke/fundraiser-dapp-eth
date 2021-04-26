@@ -37,18 +37,6 @@ function App() {
     init();
   }, [])
 
-  useEffect(() => {
-    const load = async () => {
-      const result = await contract.methods.getAll().call();
-      console.log(result);
-    }
-    if (typeof web3!=='undefined' && typeof accounts!=='undefined' && typeof contract!=='undefined') {
-      load();
-    }
-
-  }, [contract]);
-
-
   const {register, handleSubmit, formState: { errors } } = useForm();
   const {register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm();
 
@@ -125,7 +113,7 @@ function App() {
 
           <section>
             <h3>Get all Fundraisers</h3>
-            {fundraisers!='' ? fundraisers.map(fundraiser => <p key={fundraiser}>{fundraiser}</p> ) : <p>No data</p>}
+            {fundraisers.length > 0 ? fundraisers.map(fundraiser => <p key={fundraiser}>{fundraiser}</p> ) : <p>No data</p>}
             <button onClick={getAllFundraisers} >Get</button>
           </section>
 
