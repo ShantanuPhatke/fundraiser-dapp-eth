@@ -1,0 +1,46 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  width: 100%;
+}
+
+section {
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input,
+textarea {
+  box-sizing: inherit;
+  margin-top: 20px;
+  min-width: 300px;
+  padding: 7px;
+}
+
+form span {
+  font-size: 0.8rem;
+  color: red;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+h3 {
+  margin: 0;
+}
