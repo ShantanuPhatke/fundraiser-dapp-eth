@@ -10,6 +10,7 @@
 
 # production
 /build
+/src/contractBuilds
 
 # misc
 .DS_Store

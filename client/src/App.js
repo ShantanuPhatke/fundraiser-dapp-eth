@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {useForm} from "react-hook-form";
 import getWeb3 from './getWeb3';
-import FundraiserStore from './contracts/FundraiserStore.json';
-import Fundraiser from './contracts/Fundraiser.json';
+import FundraiserStore from './contractBuilds/FundraiserStore.json';
+import Fundraiser from './contractBuilds/Fundraiser.json';
 import './styles/app.scss';
 
 
