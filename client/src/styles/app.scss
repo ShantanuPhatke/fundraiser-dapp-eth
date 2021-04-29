@@ -1,13 +1,48 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
+@import "./variables";
+@import "./mixins";
+
+@include normalize();
+
+.container {
+  @include flex-center();
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
 }
 
-.app {
-  width: 100%;
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  height: 50px;
+  margin: 0 50px;
+  box-sizing: border-box;
+
+  .logo {
+    img {
+      height: 20px;
+      width: auto;
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+
+    li {
+      margin: 0 10px;
+      padding: 10px 15px;
+      transition: 0.3s ease;
+      cursor: pointer;
+      font-weight: 600;
+
+      &:hover {
+        background-color: rgba($secondary-color-1, 0.2);
+      }
+    }
+  }
 }
 
 section {
@@ -24,21 +59,21 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-form input,
-textarea {
-  box-sizing: inherit;
-  margin-top: 20px;
-  min-width: 300px;
-  padding: 7px;
-}
+  input,
+  textarea {
+    box-sizing: inherit;
+    margin-top: 20px;
+    min-width: 300px;
+    padding: 7px;
+  }
 
-form span {
-  font-size: 0.8rem;
-  color: red;
-  align-self: flex-start;
-  margin-top: 5px;
+  span {
+    font-size: 0.8rem;
+    color: red;
+    align-self: flex-start;
+    margin-top: 5px;
+  }
 }
 
 h3 {
