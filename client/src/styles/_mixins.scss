@@ -6,6 +6,12 @@
   justify-content: center;
 }
 
+@mixin mild-shadow {
+  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
 @mixin normalize {
   html,
   body {
@@ -52,8 +58,12 @@
   p,
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5 {
     color: $primary-color;
+    margin: 0;
+    line-height: 1;
   }
 
   #root {

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react"
-import {useForm} from "react-hook-form";
-import Fundraiser from './../../contractBuilds/Fundraiser.json';
-import getWeb3 from './../../utils/getWeb3.js';
-import FundraiserStore from './../../contractBuilds/FundraiserStore.json';
+import {useForm} from "react-hook-form"
+import Fundraiser from './../../contractBuilds/Fundraiser.json'
+import getWeb3 from './../../utils/getWeb3.js'
+import FundraiserStore from './../../contractBuilds/FundraiserStore.json'
+import Card from './components/Card'
 
 
 function Fundraisers() {
@@ -12,9 +13,7 @@ function Fundraisers() {
     const [fundraisers, setFundraisers] = useState([])
 
     useEffect(() => {
-        console.log("Use effect");
         const init = async () => {
-            console.log("init");
             try {
                 const web3 = await getWeb3();
                 const accounts = await web3.eth.getAccounts()
@@ -65,24 +64,9 @@ function Fundraisers() {
           return (
             <>
                 <div className="container">
-                    <section>
-                        <h3>Fundraisers</h3>
-                        {fundraisers.length > 0 ? fundraisers.map(fundraiser => <p key={fundraiser}>{fundraiser}</p> ) : <p>No data</p>}
-                        {/* <button onClick={getAllFundraisers} >Get</button> */}
-                    </section>
+                    
+                    <Card id='01' title='Fundraiser title' hostName='shan10u' goalAmount='0.001' description='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, doloribus dicta numquam laborum nisi enim voluptatem facilis a ea sunt in incidunt ipsam!' />
 
-                    <section>
-                        <form onSubmit={handleSubmit(onDonateSubmit)}>
-                        <h3>Donate</h3>
-                        <input type="text" name="contractAddress" id="contractAddress" placeholder="contractAddress" {...register('contractAddress', {required: true})}/>
-                        {errors.contractAddress && <span>This field is required</span>}
-                        
-                        <input type="number" name="donationAmount" id="donationAmount" placeholder="donationAmount" {...register('donationAmount', {required: true})}/>
-                        {errors.donationAmount && <span>This field is required</span>}
-                        
-                        <input type="submit" value="submit"/>
-                        </form>
-                    </section>
                 </div>
             </>
 
