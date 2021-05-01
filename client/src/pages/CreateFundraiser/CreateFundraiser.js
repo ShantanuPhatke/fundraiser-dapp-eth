@@ -1,10 +1,6 @@
 import React, {useState, useContext} from "react"
 import {useForm} from "react-hook-form";
-import getWeb3 from './../../utils/getWeb3.js';
-import FundraiserStore from './../../contractBuilds/FundraiserStore.json';
 import {Context} from '../../Context'
-
-
 
 function CreateFundraiser() {
     

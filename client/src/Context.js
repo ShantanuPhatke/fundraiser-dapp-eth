@@ -9,6 +9,7 @@ function ContextProvider({children}) {
     const [web3, setWeb3] = useState(undefined)
     const [accounts, setAccounts] = useState([])
     const [contract, setContract] = useState([])
+    const [fundraisers, setFundraisers] = useState([])
 
     
     useEffect(() => {
@@ -24,8 +25,8 @@ function ContextProvider({children}) {
                 setAccounts(accounts)
                 setContract(contract)
                 
-                // const fundraisersList = await contract.methods.getAll().call()
-                // setFundraisers(fundraisersList)
+                const fundraisersList = await contract.methods.getAll().call()
+                setFundraisers(fundraisersList)
             
             } catch (error) {
                 alert(`Failed to load web3, accounts or contract`)
@@ -37,7 +38,7 @@ function ContextProvider({children}) {
     }, [])
 
     return (
-        <Context.Provider value={{web3, accounts, contract}}>
+        <Context.Provider value={{web3, accounts, contract, fundraisers}}>
             {children}
         </Context.Provider>
     )

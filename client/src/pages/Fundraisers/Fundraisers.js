@@ -1,16 +1,13 @@
 import React, {useState, useContext} from "react"
 import {useForm} from "react-hook-form"
-import Fundraiser from './../../contractBuilds/Fundraiser.json'
-import getWeb3 from './../../utils/getWeb3.js'
-import FundraiserStore from './../../contractBuilds/FundraiserStore.json'
+import Fundraiser from '../../contractBuilds/Fundraiser.json'
 import Card from './components/Card'
 import {Context} from '../../Context'
 
 
 function Fundraisers() {
-    const [fundraisers, setFundraisers] = useState([])
 
-    const {web3, accounts, contract} = useContext(Context)
+    const {web3, accounts, contract, fundraisers} = useContext(Context)
 
     const {register, handleSubmit, formState: { errors } } = useForm()
 
@@ -29,10 +26,12 @@ function Fundraisers() {
         }
     }
 
-    const getAllFundraisers = async() => {
-        let response = await contract.methods.getAll().call()
-        setFundraisers(response)
-    }
+    // console.log(fundraisers);
+
+    // const getAllFundraisers = async() => {
+    //     let response = await contract.methods.getAll().call()
+    //     setFundraisers(response)
+    // }
     if (typeof web3==='undefined' || typeof accounts==='undefined' || typeof contract==='undefined') {
         return <section>Loading...</section>
       } else {
