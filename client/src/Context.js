@@ -10,7 +10,6 @@ function ContextProvider({children}) {
     const [accounts, setAccounts] = useState([])
     const [contract, setContract] = useState([])
     const [fundraisers, setFundraisers] = useState([])
-
     
     useEffect(() => {
         const init = async () => {
@@ -37,8 +36,13 @@ function ContextProvider({children}) {
         init()
     }, [])
 
+    const updateFundraisers = async () => {
+        const fundraisersList = await contract.methods.getAll().call()
+        setFundraisers(fundraisersList)
+    }
+
     return (
-        <Context.Provider value={{web3, accounts, contract, fundraisers}}>
+        <Context.Provider value={{web3, accounts, contract, fundraisers, updateFundraisers}}>
             {children}
         </Context.Provider>
     )

@@ -7,7 +7,7 @@
   @include flex-center();
   flex-direction: column;
   width: 100%;
-  height: calc(100% - 50px);
+  // height: calc(100% - 50px);
 }
 
 nav {
@@ -128,4 +128,15 @@ form {
     border-radius: 0.3rem;
     margin-top: 0.7rem;
   }
+}
+
+.card-grid {
+  width: inherit;
+  margin: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 20rem);
+  // grid-auto-rows: minmax(200px, auto);
+  grid-gap: 2rem;
+  justify-content: center;
+  justify-items: center;
 }

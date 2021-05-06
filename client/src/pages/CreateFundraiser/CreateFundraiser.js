@@ -1,10 +1,10 @@
-import React, {useState, useContext} from "react"
+import React, {useContext} from "react"
 import {useForm} from "react-hook-form";
 import {Context} from '../../Context'
 
 function CreateFundraiser() {
     
-    const {web3, accounts, contract} = useContext(Context)
+    const {web3, accounts, contract, updateFundraisers} = useContext(Context)
 
     const {register, handleSubmit, formState: { errors } } = useForm()
 
@@ -24,6 +24,7 @@ function CreateFundraiser() {
         ).send({from: accounts[0]})
 
         console.log(response)
+        updateFundraisers()
     }
 
     if (typeof web3==='undefined' || typeof accounts==='undefined' || typeof contract==='undefined') {

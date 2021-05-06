@@ -42,7 +42,7 @@ contract Fundraiser {
     uint donatorCount = 1;
     mapping(uint => address) donatorsAddress;
     
-    // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', '0xf33ae10487660103e12db21283374afa18a556dc'
+    // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xf33ae10487660103e12db21283374afa18a556dc
     constructor(uint _goalAmount, uint _minDonation, uint256 _expiryDate, string memory _hostName, string memory _title, string memory _description, address _recipientAddress, address _hostAddress) {
         fundraiserId++;
         goalAmount = _goalAmount;
@@ -56,6 +56,9 @@ contract Fundraiser {
         recipientAddress = _recipientAddress;
     }
     
+    function getDetails() view public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _hostAddress) {
+        return (goalAmount, hostName, title, description, hostAddress);
+    }
     
     function getGoal() view public returns (uint) {
         return goalAmount;
