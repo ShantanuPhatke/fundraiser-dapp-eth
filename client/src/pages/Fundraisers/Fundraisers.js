@@ -67,11 +67,11 @@ function Fundraisers() {
       } else {
           return (
             <>
-                <div className="container">
-                  <div className="card-grid">
-                    {fundraiserCards}
-                  </div>
+              <div className="container">
+                <div className="card-grid">
+                  {fundraiserCards.length > 0 ? fundraiserCards : <h1>No data found</h1>}
                 </div>
+              </div>
             </>
 
           )
