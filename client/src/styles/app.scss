@@ -7,7 +7,10 @@
   @include flex-center();
   flex-direction: column;
   width: 100%;
-  // height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
+  height: fit-content;
+  padding: 20px;
+  padding-bottom: 50px;
 }
 
 nav {
@@ -46,16 +49,16 @@ nav {
 }
 
 section {
-  height: 100vh;
-  padding: 20px;
+  // height: 100vh;
+  // padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 }
 
-form {
+.container section form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,7 +84,7 @@ form {
   flex-direction: column;
   justify-content: space-between;
   min-height: 200px;
-  width: 250px;
+  width: calc(250px + 4rem);
   background-color: white;
   padding: 2rem;
   border-radius: 1rem;
@@ -131,12 +134,127 @@ form {
 }
 
 .card-grid {
+  height: calc(100% - 50px);
   width: inherit;
-  margin: 50px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 20rem);
   // grid-auto-rows: minmax(200px, auto);
   grid-gap: 2rem;
   justify-content: center;
   justify-items: center;
+}
+
+.donate-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: 70vh;
+  width: calc(100% - 100px);
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  @include mild-shadow();
+
+  .left,
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .left {
+    flex: 3;
+    .title {
+      font-size: 2.2rem;
+      font-weight: $semibold;
+    }
+    .description {
+      text-align: justify;
+    }
+    .contributors {
+      span {
+        color: $secondary-color-2;
+      }
+    }
+  }
+
+  .right {
+    flex: 2;
+    align-items: flex-end;
+
+    .top {
+      text-align: right;
+      .host {
+        font-size: 1.6rem;
+        span {
+          font-weight: $semibold;
+        }
+      }
+      .recipient {
+        font-size: 0.9rem;
+      }
+    }
+
+    .bottom {
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .notes {
+          font-size: 1.4rem;
+          margin-bottom: 1rem;
+
+          .minDonation span,
+          .expiryDate span {
+            font-weight: $semibold;
+            color: $secondary-color-2;
+          }
+        }
+
+        span {
+          color: red;
+        }
+
+        input {
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          margin-top: 1rem;
+          font-size: 1.2rem;
+          text-align: center;
+          border: none;
+        }
+
+        .donationAmount {
+          border: 2px solid $white;
+          color: $secondary-color-1;
+          font-weight: $semibold;
+
+          &::placeholder {
+            color: black;
+            opacity: 0.4;
+            font-weight: $regular;
+          }
+
+          &:focus {
+            border: 2px solid $secondary-color-1;
+          }
+
+          &.active {
+            border: 2px solid $secondary-color-1;
+          }
+        }
+
+        .submit {
+          font-size: 1.4rem;
+          font-weight: $semibold;
+          background: $secondary-color-2;
+          color: $white;
+          padding: 0.4rem 0.8rem;
+          border-radius: 0.3rem;
+          margin-top: 0.7rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

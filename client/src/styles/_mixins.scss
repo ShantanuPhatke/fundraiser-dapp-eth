@@ -26,6 +26,7 @@
 
     * {
       outline: none;
+      box-sizing: border-box;
     }
   }
 
@@ -85,5 +86,20 @@
 
   a {
     text-decoration: none;
+  }
+
+  input,
+  textarea {
+    font-family: "Titillium Web", sans-serif;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }

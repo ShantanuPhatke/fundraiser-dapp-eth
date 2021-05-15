@@ -31,6 +31,7 @@ contract Fundraiser {
     uint fundraiserId = 1;
     uint goalAmount;
     uint minDonation;
+    uint donatorCount = 1;
     uint256 expiryDate;
     bool isCompleted;
     string title;
@@ -39,7 +40,6 @@ contract Fundraiser {
     address hostAddress;
     address recipientAddress;
     mapping(address => uint) donators;
-    uint donatorCount = 1;
     mapping(uint => address) donatorsAddress;
     
     // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xf33ae10487660103e12db21283374afa18a556dc
@@ -56,8 +56,12 @@ contract Fundraiser {
         recipientAddress = _recipientAddress;
     }
     
-    function getDetails() view public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _hostAddress) {
-        return (goalAmount, hostName, title, description, hostAddress);
+    function getDetails() view public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress) {
+        return (goalAmount, hostName, title, description, address(this));
+    }
+    
+    function getAllDetails() view public returns (uint _goalAmount, uint _minDonation, uint _donatorCount, uint256 _expiryDate, bool _isCompleted, string memory _hostName, string memory _title, string memory _description, address _hostAddress, address _recipientAddress, address _fundraiserAddress, uint _fundraiserBalance) {
+        return (goalAmount, minDonation, donatorCount, expiryDate, isCompleted, hostName, title, description, hostAddress, recipientAddress, address(this), address(this).balance);
     }
     
     function getGoal() view public returns (uint) {
