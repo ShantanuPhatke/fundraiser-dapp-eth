@@ -81,12 +81,11 @@ function Donate() {
   } else {
     return (
       <div className="container">
-        {/* <pre>{JSON.stringify(fundraiserDetails, null, 2)}</pre> */}
         <div className="donate-card">
           <div className="left">
             <div className="title">{fundraiserDetails.title}</div>
             <div className="description">{fundraiserDetails.description}</div>
-            <div className="contributors">
+            <div className="donators">
               {fundraiserDetails.donatorCount === 0
                 ? "Be the first one to donate!"
                 : fundraiserDetails.donatorCount === 1
