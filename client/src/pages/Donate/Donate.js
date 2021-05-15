@@ -77,7 +77,11 @@ function Donate() {
   }
 
   if (!fundraiserAddress.startsWith("0x")) {
-    return <div>Invalid Address</div>
+    return (
+      <div className="container">
+        <h1>Invalid Address</h1>
+      </div>
+    )
   } else {
     return (
       <div className="container">
