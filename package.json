@@ -1,0 +1,23 @@
+{
+  "name": "fundraiser-dapp-eth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShantanuPhatke/fundraiser-dapp-eth.git"
+  },
+  "author": "Shantanu Phatke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShantanuPhatke/fundraiser-dapp-eth/issues"
+  },
+  "homepage": "https://github.com/ShantanuPhatke/fundraiser-dapp-eth#readme"
+}
