@@ -5,7 +5,7 @@ import { Context } from "../../Context"
 import { useForm } from "react-hook-form"
 
 function Donate() {
-  const { web3, accounts, contract, fundraisers } = useContext(Context)
+  const { web3, accounts } = useContext(Context)
   const [fundraiserDetails, setFundraiserDetails] = useState({})
   const { fundraiserAddress } = useParams()
 

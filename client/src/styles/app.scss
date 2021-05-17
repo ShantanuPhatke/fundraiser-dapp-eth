@@ -258,3 +258,31 @@ section {
     }
   }
 }
+
+.search-bar-container {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  min-width: 350px;
+  justify-content: space-between;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+
+  &.active,
+  &:hover,
+  &:focus-within {
+    @include mild-shadow();
+  }
+
+  .search-bar {
+    width: 100%;
+    border: none;
+    font-size: 2rem;
+    margin-right: 1rem;
+  }
+  .icon {
+    font-size: 2rem;
+    cursor: pointer;
+  }
+}

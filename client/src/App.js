@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from "react-router"
 import Home from "./pages/Home/Home"
 import CreateFundraiser from "./pages/CreateFundraiser/CreateFundraiser"
 import Fundraisers from "./pages/Fundraisers/Fundraisers"
-import Tracker from "./pages/Tracker/Tracker"
+import Track from "./pages/Track/Track"
 import Donate from "./pages/Donate/Donate"
 import NotFound404 from "./pages/NotFound404/NotFound404"
 
@@ -27,8 +27,8 @@ function App() {
         <Route path="/create">
           <CreateFundraiser />
         </Route>
-        <Route path="/track">
-          <Tracker />
+        <Route path="/track/:trackAddress?">
+          <Track />
         </Route>
         <Route path="/404">
           <NotFound404 />
