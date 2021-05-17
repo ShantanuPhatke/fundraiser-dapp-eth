@@ -76,6 +76,8 @@ function Donate() {
     }
   }
 
+  const donatorsMessage = () => {}
+
   if (!fundraiserAddress.startsWith("0x")) {
     return (
       <div className="container">
@@ -90,11 +92,13 @@ function Donate() {
             <div className="title">{fundraiserDetails.title}</div>
             <div className="description">{fundraiserDetails.description}</div>
             <div className="donators">
-              {fundraiserDetails.donatorCount === 0
+              {fundraiserDetails.donatorCount == 0
                 ? "Be the first one to donate!"
-                : fundraiserDetails.donatorCount === 1
+                : fundraiserDetails.donatorCount == 1
                 ? `${fundraiserDetails.fundraiserBalance} ETH raised by a generous human!`
-                : `${fundraiserDetails.fundraiserBalance} ETH raised by ${fundraiserDetails.donatorCount} generous humans!`}
+                : fundraiserDetails.donatorCount >= 1
+                ? `${fundraiserDetails.fundraiserBalance} ETH raised by ${fundraiserDetails.donatorCount} generous humans!`
+                : ""}
               <span>❤</span>
             </div>
           </div>
