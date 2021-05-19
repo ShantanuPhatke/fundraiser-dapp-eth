@@ -286,3 +286,52 @@ section {
     cursor: pointer;
   }
 }
+
+.txnCards {
+  width: 80%;
+  margin-top: 2rem;
+  .txnCard {
+    display: flex;
+    flex-direction: column;
+    min-width: 350px;
+    justify-content: space-between;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    border: 1px solid $secondary-color-1;
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &:hover {
+      @include mild-shadow();
+    }
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    min-width: 350px;
+    justify-content: space-between;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    border: 1px solid $secondary-color-2;
+
+    h1 {
+      text-align: center;
+      color: $secondary-color-2;
+    }
+
+    &:hover {
+      @include mild-shadow();
+    }
+  }
+}

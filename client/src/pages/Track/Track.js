@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useParams, Link } from "react-router-dom"
+import TxnCard from "./components/TxnCard"
 
 function Track() {
   const { trackAddress } = useParams()
@@ -15,7 +16,13 @@ function Track() {
       `https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=${trackAddress}&startblock=0&endblock=99999999&sort=asc&apikey=${process.env.REACT_APP_ETHERSCAN_API_KEY}`
     )
     const data = await response.json()
-    setResult(data)
+    if (data.status === "1") {
+      setResult(data.result)
+    } else {
+      console.error("Invalid Address")
+      console.log(data)
+      setResult()
+    }
     setSearchBarValue(trackAddress)
   }, [trackAddress])
 
@@ -61,7 +68,24 @@ function Track() {
             🔍
           </Link>
         </div>
-        {trackAddress && <pre>{JSON.stringify(result, null, 2)}</pre>}
+        <div className="txnCards">
+          {trackAddress ? (
+            result ? (
+              // <pre>{JSON.stringify(result, null, 2)}</pre>
+              result.map((item, i) => {
+                if (item.from && item.to && item.value != 0) {
+                  return <TxnCard txnDetails={item} key={i} />
+                }
+              })
+            ) : (
+              <div className="error">
+                <h1>Invalid Address</h1>
+              </div>
+            )
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </>
   )
