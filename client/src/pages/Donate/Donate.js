@@ -60,16 +60,16 @@ function Donate() {
     formState: { errors },
   } = useForm()
 
-  const getCurrentTimestamp = () => {
-    const currDate = new Date()
-    let date =
-      currDate.getFullYear() +
-      "-" +
-      (currDate.getMonth() + 1) +
-      "-" +
-      currDate.getDate()
-    return new Date(date).getTime() / 100
-  }
+  // const getCurrentTimestamp = () => {
+  //   const currDate = new Date()
+  //   let date =
+  //     currDate.getFullYear() +
+  //     "-" +
+  //     (currDate.getMonth() + 1) +
+  //     "-" +
+  //     currDate.getDate()
+  //   return new Date(date).getTime() / 1000
+  // }
 
   const onDonateSubmit = async (data) => {
     let { donationAmount } = data
@@ -77,7 +77,7 @@ function Donate() {
     try {
       let fundraiser = new web3.eth.Contract(Fundraiser.abi, fundraiserAddress)
       let response = await fundraiser.methods
-        .addDonation(getCurrentTimestamp())
+        .addDonation()
         .send({ from: accounts[0], value: donationAmount })
       console.log(response)
     } catch (error) {
@@ -85,8 +85,6 @@ function Donate() {
       console.error(error)
     }
   }
-
-  const donatorsMessage = () => {}
 
   if (!fundraiserAddress.startsWith("0x")) {
     return (

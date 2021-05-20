@@ -12,8 +12,15 @@ function Fundraisers() {
     let fundraiser = new web3.eth.Contract(Fundraiser.abi, _address)
     let response = await fundraiser.methods.getDetails().call()
 
-    const { _title, _description, _goalAmount, _hostName, _fundraiserAddress } =
-      response
+    const {
+      _title,
+      _description,
+      _goalAmount,
+      _hostName,
+      _fundraiserAddress,
+      _isExpired,
+    } = response
+    console.log(response)
 
     let detailsObj = {
       title: _title,
@@ -21,6 +28,7 @@ function Fundraisers() {
       goalAmount: _goalAmount,
       hostName: _hostName,
       fundraiserAddress: _fundraiserAddress,
+      isExpired: _isExpired,
     }
 
     return detailsObj
@@ -36,16 +44,19 @@ function Fundraisers() {
   }, [fundraisers])
 
   const fundraiserCards = fundraiserDetails.map((fundraiser, i) => {
-    return (
-      <Card
-        key={i}
-        id={fundraiser.fundraiserAddress}
-        title={fundraiser.title}
-        hostName={fundraiser.hostName}
-        goalAmount={fundraiser.goalAmount}
-        description={fundraiser.description}
-      />
-    )
+    // console.log(fundraiser)
+    if (!fundraiser.isExpired) {
+      return (
+        <Card
+          key={i}
+          id={fundraiser.fundraiserAddress}
+          title={fundraiser.title}
+          hostName={fundraiser.hostName}
+          goalAmount={fundraiser.goalAmount}
+          description={fundraiser.description}
+        />
+      )
+    }
   })
 
   if (

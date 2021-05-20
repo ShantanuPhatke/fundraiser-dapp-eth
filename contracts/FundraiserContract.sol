@@ -40,7 +40,7 @@ contract Fundraiser {
     address recipientAddress;
     mapping(address => uint) donators;
     mapping(uint => address) donatorsAddress;
-    enum Stage {Donation, Complete, Cancel}
+    enum Stage {Donation, Complete, Expired}
     Stage public stage = Stage.Donation;
     
     // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xdD870fA1b7C4700F2BD7f44238821C26f7392148
@@ -72,9 +72,21 @@ contract Fundraiser {
         _;
     }
     
+    function isFundraiserExpired() view public returns(bool) {
+        if(block.timestamp > expiryDate){
+            return true;
+        } else {
+            return false;
+        }
+    }
     
-    function getDetails() view public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress) {
-        return (goalAmount, hostName, title, description, address(this));
+    function getDetails() public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress, bool _isExpired) {
+        bool isExpired = isFundraiserExpired();
+        if(isExpired) {
+            stage = Stage.Expired;
+            refundAll();
+        }
+        return (goalAmount, hostName, title, description, address(this), isExpired);
     }
     
     function getAllDetails() view public returns (uint _goalAmount, uint _minDonation, uint _donatorCount, uint256 _expiryDate, bool _isCompleted, string memory _hostName, string memory _title, string memory _description, address _hostAddress, address _recipientAddress, address _fundraiserAddress, uint _fundraiserBalance) {
@@ -94,10 +106,8 @@ contract Fundraiser {
     }
     
     
-    function addDonation(uint256 _currTime) public payable validStage(Stage.Donation) minDonate {
-        /*if(msg.value < minDonation) {
-            revert();*/
-        if(_currTime > expiryDate){
+    function addDonation() public payable validStage(Stage.Donation) minDonate {
+        if(block.timestamp > expiryDate){
             revert();
         } else {
             if(donators[msg.sender] == 0){
@@ -115,7 +125,7 @@ contract Fundraiser {
         }
     }
     
-    function refundAll() public payable {
+    function refundAll() public payable validStage(Stage.Expired) {
         for(uint i=1; i <= donatorCount; i++) {
             address _to = donatorsAddress[i];
             uint _amount = donators[_to];
