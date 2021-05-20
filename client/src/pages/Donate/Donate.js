@@ -60,14 +60,24 @@ function Donate() {
     formState: { errors },
   } = useForm()
 
+  const getCurrentTimestamp = () => {
+    const currDate = new Date()
+    let date =
+      currDate.getFullYear() +
+      "-" +
+      (currDate.getMonth() + 1) +
+      "-" +
+      currDate.getDate()
+    return new Date(date).getTime() / 100
+  }
+
   const onDonateSubmit = async (data) => {
     let { donationAmount } = data
-    console.log(donationAmount)
 
     try {
       let fundraiser = new web3.eth.Contract(Fundraiser.abi, fundraiserAddress)
       let response = await fundraiser.methods
-        .addDonation()
+        .addDonation(getCurrentTimestamp())
         .send({ from: accounts[0], value: donationAmount })
       console.log(response)
     } catch (error) {
