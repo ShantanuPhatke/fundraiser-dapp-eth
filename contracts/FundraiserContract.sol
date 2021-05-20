@@ -26,7 +26,6 @@ contract FundraiserStore {
     
 }
 
-
 contract Fundraiser {
     uint fundraiserId = 1;
     uint goalAmount;
@@ -41,8 +40,10 @@ contract Fundraiser {
     address recipientAddress;
     mapping(address => uint) donators;
     mapping(uint => address) donatorsAddress;
+    enum Stage {Donation, Complete, Cancel}
+    Stage public stage = Stage.Donation;
     
-    // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xf33ae10487660103e12db21283374afa18a556dc
+    // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xdD870fA1b7C4700F2BD7f44238821C26f7392148
     constructor(uint _goalAmount, uint _minDonation, uint256 _expiryDate, string memory _hostName, string memory _title, string memory _description, address _recipientAddress, address _hostAddress) {
         fundraiserId++;
         goalAmount = _goalAmount;
@@ -55,6 +56,22 @@ contract Fundraiser {
         hostAddress = _hostAddress;
         recipientAddress = _recipientAddress;
     }
+    
+    modifier onlyHost{
+        require(msg.sender == hostAddress);
+        _;
+    }
+    
+    modifier validStage(Stage reqStage){
+        require(stage == reqStage);
+        _;
+    }
+    
+    modifier minDonate{
+        require(msg.value >= minDonation);
+        _;
+    }
+    
     
     function getDetails() view public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress) {
         return (goalAmount, hostName, title, description, address(this));
@@ -72,9 +89,15 @@ contract Fundraiser {
         return address(this).balance;
     }
     
+    function getStatus() view public returns (Stage) {
+        return stage;
+    }
     
-    function addDonation() public payable {
-        if(msg.value < minDonation) {
+    
+    function addDonation(uint256 _currTime) public payable validStage(Stage.Donation) minDonate {
+        /*if(msg.value < minDonation) {
+            revert();*/
+        if(_currTime > expiryDate){
             revert();
         } else {
             if(donators[msg.sender] == 0){
@@ -83,9 +106,14 @@ contract Fundraiser {
             } else {
                 donators[msg.sender] += msg.value;
             }
+            //change state if goal is completed. this.balance already adds the msg.value
+            if(address(this).balance >= goalAmount){
+                stage = Stage.Complete;
+                isCompleted = true;
+                releaseFunds();
+            }
         }
     }
-    
     
     function refundAll() public payable {
         for(uint i=1; i <= donatorCount; i++) {
@@ -95,7 +123,7 @@ contract Fundraiser {
         }
     }
     
-    function releaseFunds() public payable {
+    function releaseFunds() public payable validStage(Stage.Complete) { 
         payable(recipientAddress).transfer(goalAmount);
     }
     
