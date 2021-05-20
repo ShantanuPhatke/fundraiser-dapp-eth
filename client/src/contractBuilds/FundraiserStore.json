@@ -18,7 +18,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -74,7 +75,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -93,7 +95,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_goalAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_minDonation\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_expiryDate\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_hostName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_title\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"_recipientAddress\",\"type\":\"address\"}],\"name\":\"createFundraiser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"fundraisers\",\"outputs\":[{\"internalType\":\"contract Fundraiser\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAll\",\"outputs\":[{\"internalType\":\"contract Fundraiser[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract Fundraiser\",\"name\":\"_fundraiserId\",\"type\":\"address\"}],\"name\":\"getFundraiserGoal\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/sphat/Desktop/BE Project/Code/fundraiser-dapp-eth/contracts/FundraiserContract.sol\":\"FundraiserStore\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/sphat/Desktop/BE Project/Code/fundraiser-dapp-eth/contracts/FundraiserContract.sol\":{\"keccak256\":\"0xf978fe3d61afddc4a0c97d72396734c31278c61e8dc127556c2a6671f6f00007\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://4fc9d6c41d49f9f88d8d323c0f432d3e4044ea84b984bf66f92ba88f787ade00\",\"dweb:/ipfs/QmP4x9QJ9SbXEpMfK68KD2r7aDCnZ7QRMkgDoehsTxe77u\"]}},\"version\":1}",
@@ -17535,8 +17538,8 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0x60263649Ed16D9B8de9fb8bE87Bf0d28645F2F92",
-      "transactionHash": "0x65167d4ffa589192025cf5e05de8b6dc3c99b6176cb256eb8c7d6155d7cf579c"
+      "address": "0x1983EE78B6265e24d47c5aC03bE9cd839325B47c",
+      "transactionHash": "0x5dc1bc50ef48ee6b36f390d5224a0eaf03cc629cbaedf54aea134e53f1e43a78"
     },
     "5777": {
       "events": {},
@@ -17546,7 +17549,8 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-05-20T14:59:29.332Z",
+  "updatedAt": "2021-05-20T15:27:27.731Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
