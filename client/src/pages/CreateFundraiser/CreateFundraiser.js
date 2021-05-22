@@ -28,10 +28,11 @@ function CreateFundraiser() {
   const schema = yup.object().shape({
     hostName: yup.string().required().min(3),
     title: yup.string().required().min(3),
-    goalAmount: yup.number().required(),
-    minDonation: yup.number().required(),
+    goalAmount: yup.number().typeError("You must specify a number").required(),
+    minDonation: yup.number().typeError("You must specify a number").required(),
     expiryDate: yup
       .date()
+      .typeError("You must specify a valid date")
       .required()
       .min(tomorrow, "Expiry Date of the fundraiser should be a later date"),
     recipientAddress: yup
