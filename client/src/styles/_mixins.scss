@@ -12,6 +12,32 @@
   -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
+@mixin custom-scrollbar($scroll-bg-color) {
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: $scroll-bg-color;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+    &:window-inactive {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
 @mixin normalize {
   html,
   body {
@@ -32,30 +58,7 @@
 
   html {
     scroll-behavior: smooth;
-
-    &::-webkit-scrollbar {
-      width: 5px;
-      background: $white;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-      -webkit-border-radius: 10px;
-      border-radius: 10px;
-    }
-
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-      -webkit-border-radius: 10px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.1);
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-
-      &:window-inactive {
-        background: rgba(0, 0, 0, 0.3);
-      }
-    }
+    @include custom-scrollbar($scroll-bg-color: $white);
   }
 
   a,

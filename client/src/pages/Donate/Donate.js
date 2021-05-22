@@ -11,6 +11,11 @@ function Donate() {
 
   const heart = <span>❤</span>
 
+  const toDate = (timestamp) => {
+    const date = new Date(timestamp * 1000)
+    return `${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`
+  }
+
   useEffect(() => {
     if (!fundraiserAddress.startsWith("0x") || !web3) return
 
@@ -64,17 +69,6 @@ function Donate() {
     handleSubmit,
     formState: { errors },
   } = useForm()
-
-  // const getCurrentTimestamp = () => {
-  //   const currDate = new Date()
-  //   let date =
-  //     currDate.getFullYear() +
-  //     "-" +
-  //     (currDate.getMonth() + 1) +
-  //     "-" +
-  //     currDate.getDate()
-  //   return new Date(date).getTime() / 1000
-  // }
 
   const onDonateSubmit = async (data) => {
     let { donationAmount } = data
@@ -131,7 +125,10 @@ function Donate() {
                 </span>
               </div>
               <div className="recipient">
-                Beneficiary: {fundraiserDetails.recipientAddress}
+                Beneficiary:{" "}
+                <Link to={`/track/${fundraiserDetails.recipientAddress}`}>
+                  {fundraiserDetails.recipientAddress}
+                </Link>
               </div>
             </div>
             <div className="bottom">
@@ -146,7 +143,8 @@ function Donate() {
                     <span> {fundraiserDetails.minDonation} Wei</span>
                   </div>
                   <div className="expiryDate">
-                    Expires on:<span> {fundraiserDetails.expiryDate}</span>
+                    Expires on:
+                    <span> {toDate(fundraiserDetails.expiryDate)}</span>
                   </div>
                 </div>
                 <input

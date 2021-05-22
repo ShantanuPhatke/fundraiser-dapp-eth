@@ -188,7 +188,14 @@ section {
     }
     .description {
       text-align: justify;
+      font-size: 1.2rem;
+      max-height: 50vh;
+      overflow-y: scroll;
+      padding-right: 7px;
+      margin-bottom: 1rem;
+      @include custom-scrollbar($scroll-bg-color: white);
     }
+
     .donators {
       span {
         color: $secondary-color-2;

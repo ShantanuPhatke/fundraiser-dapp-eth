@@ -46,7 +46,7 @@ function Fundraisers() {
   }, [fundraisers, web3])
 
   const fundraiserCards = fundraiserDetails
-    .filter((fundraiser) => !fundraiser.isExpired)
+    // .filter((fundraiser) => !fundraiser.isExpired)
     .map((fundraiser, i) => {
       // console.log(fundraiser)
       return (
