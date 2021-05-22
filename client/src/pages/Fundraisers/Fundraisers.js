@@ -8,44 +8,47 @@ function Fundraisers() {
 
   const [fundraiserDetails, setFundraiserDetails] = useState([])
 
-  const getFundraiserDetails = async (_address) => {
-    let fundraiser = new web3.eth.Contract(Fundraiser.abi, _address)
-    let response = await fundraiser.methods.getDetails().call()
-
-    const {
-      _title,
-      _description,
-      _goalAmount,
-      _hostName,
-      _fundraiserAddress,
-      _isExpired,
-    } = response
-    console.log(response)
-
-    let detailsObj = {
-      title: _title,
-      description: _description,
-      goalAmount: _goalAmount,
-      hostName: _hostName,
-      fundraiserAddress: _fundraiserAddress,
-      isExpired: _isExpired,
-    }
-
-    return detailsObj
-  }
-
   useEffect(() => {
+    if (!web3) return
+    const getFundraiserDetails = async (_address) => {
+      let fundraiser = new web3.eth.Contract(Fundraiser.abi, _address)
+      let response = await fundraiser.methods.getDetails().call()
+
+      const {
+        _title,
+        _description,
+        _goalAmount,
+        _hostName,
+        _fundraiserAddress,
+        _isExpired,
+        _fundraiserBalance,
+      } = response
+      console.log(response)
+
+      let detailsObj = {
+        title: _title,
+        description: _description,
+        goalAmount: _goalAmount,
+        hostName: _hostName,
+        fundraiserAddress: _fundraiserAddress,
+        isExpired: _isExpired,
+        fundraiserBalance: _fundraiserBalance,
+      }
+
+      return detailsObj
+    }
     // Loop through all fundraisers
     for (const item in fundraisers) {
       getFundraiserDetails(fundraisers[item]).then((detailsObj) =>
         setFundraiserDetails((prevDetails) => [...prevDetails, detailsObj])
       )
     }
-  }, [fundraisers])
+  }, [fundraisers, web3])
 
-  const fundraiserCards = fundraiserDetails.map((fundraiser, i) => {
-    // console.log(fundraiser)
-    if (!fundraiser.isExpired) {
+  const fundraiserCards = fundraiserDetails
+    .filter((fundraiser) => !fundraiser.isExpired)
+    .map((fundraiser, i) => {
+      // console.log(fundraiser)
       return (
         <Card
           key={i}
@@ -54,10 +57,10 @@ function Fundraisers() {
           hostName={fundraiser.hostName}
           goalAmount={fundraiser.goalAmount}
           description={fundraiser.description}
+          fundraiserBalance={fundraiser.fundraiserBalance}
         />
       )
-    }
-  })
+    })
 
   if (
     typeof web3 === "undefined" ||

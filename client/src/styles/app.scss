@@ -80,6 +80,7 @@ section {
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -87,7 +88,9 @@ section {
   width: calc(250px + 4rem);
   background-color: white;
   padding: 2rem;
+  padding-bottom: 2.5rem;
   border-radius: 1rem;
+  overflow: hidden;
   @include mild-shadow();
 
   .title {
@@ -130,6 +133,21 @@ section {
     width: fit-content;
     border-radius: 0.3rem;
     margin-top: 0.7rem;
+  }
+
+  .progress-bar,
+  .progress {
+    height: 1rem;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .progress {
+    background-color: $secondary-color-1;
+    width: 0;
   }
 }
 
@@ -204,6 +222,7 @@ section {
           font-size: 1.4rem;
           margin-bottom: 1rem;
 
+          .goalAmount span,
           .minDonation span,
           .expiryDate span {
             font-weight: $semibold;

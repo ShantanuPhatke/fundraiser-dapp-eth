@@ -5,6 +5,8 @@ import { Context } from "../../Context"
 function CreateFundraiser() {
   const { web3, accounts, contract, updateFundraisers } = useContext(Context)
 
+  const toWei = (amount) => web3.utils.toWei(amount, "ether")
+
   const {
     register,
     handleSubmit,
@@ -26,8 +28,8 @@ function CreateFundraiser() {
 
     let response = await contract.methods
       .createFundraiser(
-        parseInt(goalAmount),
-        parseInt(minDonation),
+        toWei(goalAmount),
+        toWei(minDonation),
         dateToBigInt(expiryDate),
         hostName.toString(),
         title.toString(),
@@ -75,7 +77,7 @@ function CreateFundraiser() {
                 type="number"
                 name="goalAmount"
                 id="goalAmount"
-                placeholder="goalAmount"
+                placeholder="goalAmount (ETH)"
                 {...register("goalAmount", { required: true })}
               />
               {errors.goalAmount && <span>This field is required</span>}
@@ -84,7 +86,7 @@ function CreateFundraiser() {
                 type="number"
                 name="minDonation"
                 id="minDonation"
-                placeholder="minDonation"
+                placeholder="minDonation (ETH)"
                 {...register("minDonation", { required: true })}
               />
               {errors.minDonation && <span>This field is required</span>}

@@ -9,21 +9,24 @@ function Track() {
   const searchBar = useRef("")
   const searchIcon = useRef("")
 
-  useEffect(async () => {
-    if (!trackAddress) return
-
-    const response = await fetch(
-      `https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=${trackAddress}&startblock=0&endblock=99999999&sort=asc&apikey=${process.env.REACT_APP_ETHERSCAN_API_KEY}`
-    )
-    const data = await response.json()
-    if (data.status === "1") {
-      setResult(data.result)
-    } else {
-      console.error("Invalid Address")
-      console.log(data)
-      setResult()
+  useEffect(() => {
+    const init = async () => {
+      const response = await fetch(
+        `https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=${trackAddress}&startblock=0&endblock=99999999&sort=asc&apikey=${process.env.REACT_APP_ETHERSCAN_API_KEY}`
+      )
+      const data = await response.json()
+      if (data.status === "1") {
+        setResult(data.result)
+      } else {
+        console.error("Invalid Address")
+        console.log(data)
+        setResult()
+      }
+      setSearchBarValue(trackAddress)
     }
-    setSearchBarValue(trackAddress)
+
+    if (!trackAddress) return
+    init()
   }, [trackAddress])
 
   useEffect(() => {
@@ -72,11 +75,13 @@ function Track() {
           {trackAddress ? (
             result ? (
               // <pre>{JSON.stringify(result, null, 2)}</pre>
-              result.map((item, i) => {
-                if (item.from && item.to && item.value != 0) {
+              result
+                .filter(
+                  (item) => item.from && item.to && parseInt(item.value) !== 0
+                )
+                .map((item, i) => {
                   return <TxnCard txnDetails={item} key={i} />
-                }
-              })
+                })
             ) : (
               <div className="error">
                 <h1>Invalid Address</h1>

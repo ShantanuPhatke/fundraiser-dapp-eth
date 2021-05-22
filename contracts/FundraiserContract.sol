@@ -43,7 +43,7 @@ contract Fundraiser {
     enum Stage {Donation, Complete, Expired}
     Stage public stage = Stage.Donation;
     
-    // 10000, 100, 16191360000, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xdD870fA1b7C4700F2BD7f44238821C26f7392148
+    // 10000, 100, 1653067368, 'shanHost',  'Test Fundraiser', 'This is a test fundraiser for my first test', 0xdD870fA1b7C4700F2BD7f44238821C26f7392148
     constructor(uint _goalAmount, uint _minDonation, uint256 _expiryDate, string memory _hostName, string memory _title, string memory _description, address _recipientAddress, address _hostAddress) {
         fundraiserId++;
         goalAmount = _goalAmount;
@@ -80,13 +80,13 @@ contract Fundraiser {
         }
     }
     
-    function getDetails() public returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress, bool _isExpired) {
+    function getDetails() public payable returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress, bool _isExpired, uint _fundraiserBalance) {
         bool isExpired = isFundraiserExpired();
         if(isExpired) {
             stage = Stage.Expired;
             refundAll();
         }
-        return (goalAmount, hostName, title, description, address(this), isExpired);
+        return (goalAmount, hostName, title, description, address(this), isExpired, address(this).balance);
     }
     
     function getAllDetails() view public returns (uint _goalAmount, uint _minDonation, uint _donatorCount, uint256 _expiryDate, bool _isCompleted, string memory _hostName, string memory _title, string memory _description, address _hostAddress, address _recipientAddress, address _fundraiserAddress, uint _fundraiserBalance) {

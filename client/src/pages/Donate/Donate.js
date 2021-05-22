@@ -9,45 +9,50 @@ function Donate() {
   const [fundraiserDetails, setFundraiserDetails] = useState({})
   const { fundraiserAddress } = useParams()
 
-  const getFundraiserDetails = async (_address) => {
-    let fundraiser = new web3.eth.Contract(Fundraiser.abi, _address)
-    let response = await fundraiser.methods.getAllDetails().call()
-
-    const {
-      _goalAmount,
-      _minDonation,
-      _donatorCount,
-      _expiryDate,
-      _isCompleted,
-      _hostName,
-      _title,
-      _description,
-      _hostAddress,
-      _recipientAddress,
-      _fundraiserAddress,
-      _fundraiserBalance,
-    } = response
-
-    let detailsObj = {
-      title: _title,
-      description: _description,
-      goalAmount: _goalAmount,
-      minDonation: _minDonation,
-      donatorCount: _donatorCount - 1,
-      expiryDate: _expiryDate,
-      isCompleted: _isCompleted,
-      hostName: _hostName,
-      hostAddress: _hostAddress,
-      recipientAddress: _recipientAddress,
-      fundraiserAddress: _fundraiserAddress,
-      fundraiserBalance: _fundraiserBalance,
-    }
-
-    return detailsObj
-  }
+  const heart = <span>❤</span>
 
   useEffect(() => {
     if (!fundraiserAddress.startsWith("0x") || !web3) return
+
+    const getFundraiserDetails = async (_address) => {
+      let fundraiser = new web3.eth.Contract(Fundraiser.abi, _address)
+      let response = await fundraiser.methods.getAllDetails().call()
+
+      const {
+        _goalAmount,
+        _minDonation,
+        _donatorCount,
+        _expiryDate,
+        _isCompleted,
+        _hostName,
+        _title,
+        _description,
+        _hostAddress,
+        _recipientAddress,
+        _fundraiserAddress,
+        _fundraiserBalance,
+      } = response
+
+      let detailsObj = {
+        title: _title,
+        description: _description,
+        goalAmount: web3.utils.fromWei(_goalAmount.toString(), "ether"),
+        minDonation: _minDonation,
+        donatorCount: _donatorCount - 1,
+        expiryDate: _expiryDate,
+        isCompleted: _isCompleted,
+        hostName: _hostName,
+        hostAddress: _hostAddress,
+        recipientAddress: _recipientAddress,
+        fundraiserAddress: _fundraiserAddress,
+        fundraiserBalance: web3.utils.fromWei(
+          _fundraiserBalance.toString(),
+          "ether"
+        ),
+      }
+
+      return detailsObj
+    }
 
     getFundraiserDetails(fundraiserAddress).then((res) =>
       setFundraiserDetails(res)
@@ -86,6 +91,18 @@ function Donate() {
     }
   }
 
+  const donationMessage = () => {
+    switch (fundraiserDetails.donatorCount) {
+      case 0:
+        return "Be the first one to donate!"
+      case 1:
+        return `${fundraiserDetails.fundraiserBalance} ETH raised by a generous human!`
+      default:
+        break
+    }
+    return `${fundraiserDetails.fundraiserBalance} ETH raised by ${fundraiserDetails.donatorCount} generous humans!`
+  }
+
   if (!fundraiserAddress.startsWith("0x")) {
     return (
       <div className="container">
@@ -100,14 +117,7 @@ function Donate() {
             <div className="title">{fundraiserDetails.title}</div>
             <div className="description">{fundraiserDetails.description}</div>
             <div className="donators">
-              {fundraiserDetails.donatorCount == 0
-                ? "Be the first one to donate!"
-                : fundraiserDetails.donatorCount == 1
-                ? `${fundraiserDetails.fundraiserBalance} ETH raised by a generous human!`
-                : fundraiserDetails.donatorCount >= 1
-                ? `${fundraiserDetails.fundraiserBalance} ETH raised by ${fundraiserDetails.donatorCount} generous humans!`
-                : ""}
-              <span>❤</span>
+              {donationMessage()} {heart}
             </div>
           </div>
           <div className="right">
@@ -127,12 +137,16 @@ function Donate() {
             <div className="bottom">
               <form onSubmit={handleSubmit(onDonateSubmit)}>
                 <div className="notes">
+                  <div className="goalAmount">
+                    Goal amount:
+                    <span> {fundraiserDetails.goalAmount} ETH</span>
+                  </div>
                   <div className="minDonation">
                     Minimum donation:
                     <span> {fundraiserDetails.minDonation} Wei</span>
                   </div>
                   <div className="expiryDate">
-                    Expires on:<span>{fundraiserDetails.expiryDate}</span>
+                    Expires on:<span> {fundraiserDetails.expiryDate}</span>
                   </div>
                 </div>
                 <input
@@ -140,7 +154,7 @@ function Donate() {
                   name="donationAmount"
                   id="donationAmount"
                   className="donationAmount"
-                  placeholder="Donation amount in Wei"
+                  placeholder="Donation amount (Wei)"
                   {...register("donationAmount", { required: true })}
                 />
                 {errors.donationAmount && <span>This field is required</span>}
