@@ -55,29 +55,70 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  h1 {
+    text-align: center;
+  }
   // align-items: center;
 }
 
 .container section form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  // grid-template-rows: repeat(5, auto);
+  grid-gap: 1.5rem;
+  justify-items: stretch;
 
-  input,
-  textarea {
-    box-sizing: inherit;
-    margin-top: 20px;
-    min-width: 300px;
-    padding: 7px;
-  }
-
-  span {
-    font-size: 0.8rem;
+  .grid-item {
     text-align: center;
-    color: red;
-    width: 100%;
-    align-self: flex-start;
-    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+
+    &.description,
+    &.submit {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    input,
+    textarea {
+      box-sizing: inherit;
+      font-size: 1rem;
+      min-width: 350px;
+      padding: 1rem;
+      border: 1px solid $secondary-color-1;
+      border-radius: 0.5rem;
+
+      &:focus,
+      &:hover {
+        @include mild-shadow();
+      }
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+      @include hide-scrollbar();
+    }
+    input[type="submit"] {
+      width: 100%;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: $semibold;
+      background-color: $secondary-color-1;
+    }
+
+    span {
+      font-size: 0.8rem;
+      text-align: center;
+      color: red;
+      width: 100%;
+      align-self: flex-start;
+      margin-top: 5px;
+    }
   }
 }
 

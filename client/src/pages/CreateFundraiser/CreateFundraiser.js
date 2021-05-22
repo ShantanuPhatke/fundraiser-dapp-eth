@@ -91,75 +91,90 @@ function CreateFundraiser() {
       <>
         <div className="container">
           <section>
+            <h1>Create Fundraiser</h1>
             <form onSubmit={handleSubmit(onCreateSubmit)}>
-              <h3>Create Fundraiser</h3>
-              <input
-                type="text"
-                name="hostName"
-                id="hostName"
-                placeholder="hostName"
-                {...register("hostName")}
-              />
-              {errors.hostName && <span>{errors.hostName.message}</span>}
+              <div className="grid-item">
+                <input
+                  type="text"
+                  name="hostName"
+                  id="hostName"
+                  placeholder="Host Name"
+                  {...register("hostName")}
+                />
+                {errors.hostName && <span>{errors.hostName.message}</span>}
+              </div>
+              <div className="grid-item">
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  placeholder="Title"
+                  {...register("title")}
+                />
+                {errors.title && <span>{errors.title.message}</span>}
+              </div>
+              <div className="grid-item">
+                <input
+                  type="number"
+                  name="goalAmount"
+                  id="goalAmount"
+                  placeholder="Goal Amount (ETH)"
+                  {...register("goalAmount")}
+                />
+                {errors.goalAmount && <span>{errors.goalAmount.message}</span>}
+              </div>
+              <div className="grid-item">
+                <input
+                  type="number"
+                  name="minDonation"
+                  id="minDonation"
+                  placeholder="Minimum Donation (ETH)"
+                  {...register("minDonation")}
+                />
+                {errors.minDonation && (
+                  <span>{errors.minDonation.message}</span>
+                )}
+              </div>
+              <div className="grid-item">
+                <input
+                  type="date"
+                  name="expiryDate"
+                  id="expiryDate"
+                  min={formatDate(tomorrow)}
+                  {...register("expiryDate")}
+                />
+                {errors.expiryDate && <span>{errors.expiryDate.message}</span>}
+              </div>
 
-              <input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="title"
-                {...register("title")}
-              />
-              {errors.title && <span>{errors.title.message}</span>}
+              <div className="grid-item">
+                <input
+                  type="text"
+                  name="recipientAddress"
+                  id="recipientAddress"
+                  placeholder="Recipient Address"
+                  {...register("recipientAddress")}
+                />
+                {errors.recipientAddress && (
+                  <span>{errors.recipientAddress.message}</span>
+                )}
+              </div>
 
-              <input
-                type="number"
-                name="goalAmount"
-                id="goalAmount"
-                placeholder="goalAmount (ETH)"
-                {...register("goalAmount")}
-              />
-              {errors.goalAmount && <span>{errors.goalAmount.message}</span>}
+              <div className="grid-item description">
+                <textarea
+                  name="description"
+                  id="description"
+                  rows="4"
+                  placeholder="Describe need for the fundraiser in detail..."
+                  {...register("description")}
+                ></textarea>
+                {errors.description && (
+                  <span>{errors.description.message}</span>
+                )}
+              </div>
 
-              <input
-                type="number"
-                name="minDonation"
-                id="minDonation"
-                placeholder="minDonation (ETH)"
-                {...register("minDonation")}
-              />
-              {errors.minDonation && <span>{errors.minDonation.message}</span>}
-
-              <input
-                type="date"
-                name="expiryDate"
-                id="expiryDate"
-                min={formatDate(tomorrow)}
-                {...register("expiryDate")}
-              />
-              {errors.expiryDate && <span>{errors.expiryDate.message}</span>}
-
-              <input
-                type="text"
-                name="recipientAddress"
-                id="recipientAddress"
-                placeholder="recipientAddress"
-                {...register("recipientAddress")}
-              />
-              {errors.recipientAddress && (
-                <span>{errors.recipientAddress.message}</span>
-              )}
-
-              <textarea
-                name="description"
-                id="description"
-                cols="30"
-                rows="10"
-                placeholder="description"
-                {...register("description")}
-              ></textarea>
-              {errors.description && <span>{errors.description.message}</span>}
-
-              <input type="submit" value="submit" />
+              <div className="grid-item submit">
+                <input type="submit" value="CREATE" />
+              </div>
             </form>
           </section>
         </div>
