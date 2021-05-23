@@ -93,7 +93,7 @@ function Donate() {
 
     try {
       let fundraiser = new web3.eth.Contract(Fundraiser.abi, fundraiserAddress)
-      let response = await fundraiser.methods
+      await fundraiser.methods
         .addDonation()
         .send({ from: accounts[0], value: donationAmount })
       // console.log(response)

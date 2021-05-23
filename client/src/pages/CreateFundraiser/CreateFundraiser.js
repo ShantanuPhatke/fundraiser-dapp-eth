@@ -85,7 +85,7 @@ function CreateFundraiser() {
     } = data
 
     try {
-      let response = await contract.methods
+      await contract.methods
         .createFundraiser(
           toWei(goalAmount.toFixed(18)),
           toWei(minDonation.toFixed(18)),
