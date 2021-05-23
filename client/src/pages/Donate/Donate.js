@@ -4,12 +4,14 @@ import Fundraiser from "../../contractBuilds/Fundraiser.json"
 import { Context } from "../../Context"
 import { useForm } from "react-hook-form"
 import Loader from "../../components/Loader"
+import TxnLoader from "../../components/TxnLoader"
 
 function Donate() {
   const { web3, accounts } = useContext(Context)
   const [fundraiserDetails, setFundraiserDetails] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const { fundraiserAddress } = useParams()
+  const [isTxnLoading, setIsTxnLoading] = useState(false)
+  let { fundraiserAddress } = useParams()
 
   const heart = <span>❤</span>
 
@@ -18,7 +20,23 @@ function Donate() {
     return `${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`
   }
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm()
+
   useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        donationAmount: "",
+      })
+    }
+  }, [isSubmitSuccessful, reset])
+
+  useEffect(() => {
+    setIsLoading(true)
     if (!fundraiserAddress.startsWith("0x") || !web3) return
 
     const getFundraiserDetails = async (_address) => {
@@ -65,17 +83,12 @@ function Donate() {
       setFundraiserDetails(res)
       setIsLoading(false)
     })
-  }, [web3, fundraiserAddress])
+  }, [web3, fundraiserAddress, isSubmitSuccessful])
 
   useEffect(() => {}, [fundraiserDetails])
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
-
   const onDonateSubmit = async (data) => {
+    setIsTxnLoading(true)
     let { donationAmount } = data
 
     try {
@@ -83,11 +96,13 @@ function Donate() {
       let response = await fundraiser.methods
         .addDonation()
         .send({ from: accounts[0], value: donationAmount })
-      console.log(response)
+      // console.log(response)
+      alert("Transaction successful!")
     } catch (error) {
       alert(`Failed to donate to fundraiser at ${fundraiserAddress}`)
       console.error(error)
     }
+    setIsTxnLoading(false)
   }
 
   const donationMessage = () => {
@@ -110,74 +125,77 @@ function Donate() {
     )
   } else {
     return (
-      <div className="container">
-        <div className="donate-card">
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <>
-              <div className="left">
-                <div className="title">{fundraiserDetails.title}</div>
-                <div className="description">
-                  {fundraiserDetails.description}
-                </div>
-                <div className="donators">
-                  {donationMessage()} {heart}
-                </div>
-              </div>
-              <div className="right">
-                <div className="top">
-                  <div className="host">
-                    Hosted by{" "}
-                    <span>
-                      <Link to={`/track/${fundraiserDetails.hostAddress}`}>
-                        {fundraiserDetails.hostName}
-                      </Link>
-                    </span>
+      <>
+        {isTxnLoading ? <TxnLoader /> : ""}
+        <div className="container">
+          <div className="donate-card">
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <div className="left">
+                  <div className="title">{fundraiserDetails.title}</div>
+                  <div className="description">
+                    {fundraiserDetails.description}
                   </div>
-                  <div className="recipient">
-                    Beneficiary:{" "}
-                    <Link to={`/track/${fundraiserDetails.recipientAddress}`}>
-                      {fundraiserDetails.recipientAddress}
-                    </Link>
+                  <div className="donators">
+                    {donationMessage()} {heart}
                   </div>
                 </div>
-                <div className="bottom">
-                  <form onSubmit={handleSubmit(onDonateSubmit)}>
-                    <div className="notes">
-                      <div className="goalAmount">
-                        Goal amount:
-                        <span> {fundraiserDetails.goalAmount} ETH</span>
-                      </div>
-                      <div className="minDonation">
-                        Minimum donation:
-                        <span> {fundraiserDetails.minDonation} Wei</span>
-                      </div>
-                      <div className="expiryDate">
-                        Expires on:
-                        <span> {toDate(fundraiserDetails.expiryDate)}</span>
-                      </div>
+                <div className="right">
+                  <div className="top">
+                    <div className="host">
+                      Hosted by{" "}
+                      <span>
+                        <Link to={`/track/${fundraiserDetails.hostAddress}`}>
+                          {fundraiserDetails.hostName}
+                        </Link>
+                      </span>
                     </div>
-                    <input
-                      type="number"
-                      name="donationAmount"
-                      id="donationAmount"
-                      className="donationAmount"
-                      placeholder="Donation amount (Wei)"
-                      {...register("donationAmount", { required: true })}
-                    />
-                    {errors.donationAmount && (
-                      <span>This field is required</span>
-                    )}
+                    <div className="recipient">
+                      Beneficiary:{" "}
+                      <Link to={`/track/${fundraiserDetails.recipientAddress}`}>
+                        {fundraiserDetails.recipientAddress}
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="bottom">
+                    <form onSubmit={handleSubmit(onDonateSubmit)}>
+                      <div className="notes">
+                        <div className="goalAmount">
+                          Goal amount:
+                          <span> {fundraiserDetails.goalAmount} ETH</span>
+                        </div>
+                        <div className="minDonation">
+                          Minimum donation:
+                          <span> {fundraiserDetails.minDonation} Wei</span>
+                        </div>
+                        <div className="expiryDate">
+                          Expires on:
+                          <span> {toDate(fundraiserDetails.expiryDate)}</span>
+                        </div>
+                      </div>
+                      <input
+                        type="number"
+                        name="donationAmount"
+                        id="donationAmount"
+                        className="donationAmount"
+                        placeholder="Donation amount (Wei)"
+                        {...register("donationAmount", { required: true })}
+                      />
+                      {errors.donationAmount && (
+                        <span>This field is required</span>
+                      )}
 
-                    <input type="submit" className="submit" value="DONATE" />
-                  </form>
+                      <input type="submit" className="submit" value="DONATE" />
+                    </form>
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 }
