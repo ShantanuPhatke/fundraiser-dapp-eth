@@ -67,8 +67,8 @@ function CreateFundraiser() {
 
     let response = await contract.methods
       .createFundraiser(
-        toWei(goalAmount),
-        toWei(minDonation),
+        toWei(goalAmount.toFixed(18)),
+        toWei(minDonation.toFixed(18)),
         dateToBigInt(expiryDate),
         hostName.toString(),
         title.toString(),
@@ -117,6 +117,7 @@ function CreateFundraiser() {
               <div className="grid-item">
                 <input
                   type="number"
+                  step="any"
                   name="goalAmount"
                   id="goalAmount"
                   placeholder="Goal Amount (ETH)"
@@ -127,6 +128,7 @@ function CreateFundraiser() {
               <div className="grid-item">
                 <input
                   type="number"
+                  step="any"
                   name="minDonation"
                   id="minDonation"
                   placeholder="Minimum Donation (ETH)"
