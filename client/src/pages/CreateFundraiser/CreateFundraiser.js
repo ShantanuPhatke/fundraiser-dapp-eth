@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { Context } from "../../Context"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -47,10 +47,25 @@ function CreateFundraiser() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
   })
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        hostName: "",
+        title: "",
+        goalAmount: "",
+        minDonation: "",
+        expiryDate: "",
+        recipientAddress: "",
+        description: "",
+      })
+    }
+  }, [isSubmitSuccessful, reset])
 
   const dateToBigInt = (date) => new Date(date).getTime() / 1000
 
