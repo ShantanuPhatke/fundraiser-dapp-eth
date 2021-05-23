@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { Context } from "../../Context"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import TxnLoader from "../../components/TxnLoader"
 
 const tomorrow = new Date(Date.now() + 86400000)
 tomorrow.setHours(0, 0, 0, 0)
@@ -24,6 +25,8 @@ const formatDate = (date) => {
 function CreateFundraiser() {
   const { web3, accounts, contract, updateFundraisers } = useContext(Context)
   const toWei = (amount) => web3.utils.toWei(amount, "ether")
+
+  const [isTxnLoading, setIsTxnLoading] = useState(false)
 
   const schema = yup.object().shape({
     hostName: yup.string().required().min(3),
@@ -70,6 +73,7 @@ function CreateFundraiser() {
   const dateToBigInt = (date) => new Date(date).getTime() / 1000
 
   const onCreateSubmit = async (data) => {
+    setIsTxnLoading(true)
     let {
       goalAmount,
       minDonation,
@@ -80,19 +84,25 @@ function CreateFundraiser() {
       recipientAddress,
     } = data
 
-    let response = await contract.methods
-      .createFundraiser(
-        toWei(goalAmount.toFixed(18)),
-        toWei(minDonation.toFixed(18)),
-        dateToBigInt(expiryDate),
-        hostName.toString(),
-        title.toString(),
-        description.toString(),
-        recipientAddress.toString()
-      )
-      .send({ from: accounts[0] })
+    try {
+      let response = await contract.methods
+        .createFundraiser(
+          toWei(goalAmount.toFixed(18)),
+          toWei(minDonation.toFixed(18)),
+          dateToBigInt(expiryDate),
+          hostName.toString(),
+          title.toString(),
+          description.toString(),
+          recipientAddress.toString()
+        )
+        .send({ from: accounts[0] })
+      // console.log(response)
+      alert(`Transaction successful!`)
+    } catch (error) {
+      alert(`Transaction error. ${error.message}`)
+    }
 
-    console.log(response)
+    setIsTxnLoading(false)
     updateFundraisers()
   }
 
@@ -105,6 +115,7 @@ function CreateFundraiser() {
   } else {
     return (
       <>
+        {isTxnLoading ? <TxnLoader /> : ""}
         <div className="container">
           <section>
             <h1>Create Fundraiser</h1>
