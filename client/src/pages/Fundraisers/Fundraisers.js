@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from "react"
 import Fundraiser from "../../contractBuilds/Fundraiser.json"
 import Card from "./components/Card"
 import { Context } from "../../Context"
+import Loader from "../../components/Loader"
 
 function Fundraisers() {
-  const { web3, accounts, contract, fundraisers } = useContext(Context)
+  const { web3, fundraisers } = useContext(Context)
 
   const [fundraiserDetails, setFundraiserDetails] = useState([])
 
@@ -62,27 +63,15 @@ function Fundraisers() {
       )
     })
 
-  if (
-    typeof web3 === "undefined" ||
-    typeof accounts === "undefined" ||
-    typeof contract === "undefined"
-  ) {
-    return <section>Loading...</section>
-  } else {
-    return (
-      <>
-        <div className="container">
-          <div className="card-grid">
-            {fundraiserCards.length > 0 ? (
-              fundraiserCards
-            ) : (
-              <h1>No data found</h1>
-            )}
-          </div>
+  return (
+    <>
+      <div className="container">
+        <div className="card-grid">
+          {fundraiserCards.length === 0 ? <Loader /> : fundraiserCards}
         </div>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
 }
 
 export default Fundraisers

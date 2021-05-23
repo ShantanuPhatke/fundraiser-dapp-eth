@@ -3,10 +3,12 @@ import { useParams, Link } from "react-router-dom"
 import Fundraiser from "../../contractBuilds/Fundraiser.json"
 import { Context } from "../../Context"
 import { useForm } from "react-hook-form"
+import Loader from "../../components/Loader"
 
 function Donate() {
   const { web3, accounts } = useContext(Context)
   const [fundraiserDetails, setFundraiserDetails] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
   const { fundraiserAddress } = useParams()
 
   const heart = <span>❤</span>
@@ -59,10 +61,13 @@ function Donate() {
       return detailsObj
     }
 
-    getFundraiserDetails(fundraiserAddress).then((res) =>
+    getFundraiserDetails(fundraiserAddress).then((res) => {
       setFundraiserDetails(res)
-    )
+      setIsLoading(false)
+    })
   }, [web3, fundraiserAddress])
+
+  useEffect(() => {}, [fundraiserDetails])
 
   const {
     register,
@@ -107,60 +112,70 @@ function Donate() {
     return (
       <div className="container">
         <div className="donate-card">
-          <div className="left">
-            <div className="title">{fundraiserDetails.title}</div>
-            <div className="description">{fundraiserDetails.description}</div>
-            <div className="donators">
-              {donationMessage()} {heart}
-            </div>
-          </div>
-          <div className="right">
-            <div className="top">
-              <div className="host">
-                Hosted by{" "}
-                <span>
-                  <Link to={`/track/${fundraiserDetails.hostAddress}`}>
-                    {fundraiserDetails.hostName}
-                  </Link>
-                </span>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div className="left">
+                <div className="title">{fundraiserDetails.title}</div>
+                <div className="description">
+                  {fundraiserDetails.description}
+                </div>
+                <div className="donators">
+                  {donationMessage()} {heart}
+                </div>
               </div>
-              <div className="recipient">
-                Beneficiary:{" "}
-                <Link to={`/track/${fundraiserDetails.recipientAddress}`}>
-                  {fundraiserDetails.recipientAddress}
-                </Link>
-              </div>
-            </div>
-            <div className="bottom">
-              <form onSubmit={handleSubmit(onDonateSubmit)}>
-                <div className="notes">
-                  <div className="goalAmount">
-                    Goal amount:
-                    <span> {fundraiserDetails.goalAmount} ETH</span>
+              <div className="right">
+                <div className="top">
+                  <div className="host">
+                    Hosted by{" "}
+                    <span>
+                      <Link to={`/track/${fundraiserDetails.hostAddress}`}>
+                        {fundraiserDetails.hostName}
+                      </Link>
+                    </span>
                   </div>
-                  <div className="minDonation">
-                    Minimum donation:
-                    <span> {fundraiserDetails.minDonation} Wei</span>
-                  </div>
-                  <div className="expiryDate">
-                    Expires on:
-                    <span> {toDate(fundraiserDetails.expiryDate)}</span>
+                  <div className="recipient">
+                    Beneficiary:{" "}
+                    <Link to={`/track/${fundraiserDetails.recipientAddress}`}>
+                      {fundraiserDetails.recipientAddress}
+                    </Link>
                   </div>
                 </div>
-                <input
-                  type="number"
-                  name="donationAmount"
-                  id="donationAmount"
-                  className="donationAmount"
-                  placeholder="Donation amount (Wei)"
-                  {...register("donationAmount", { required: true })}
-                />
-                {errors.donationAmount && <span>This field is required</span>}
+                <div className="bottom">
+                  <form onSubmit={handleSubmit(onDonateSubmit)}>
+                    <div className="notes">
+                      <div className="goalAmount">
+                        Goal amount:
+                        <span> {fundraiserDetails.goalAmount} ETH</span>
+                      </div>
+                      <div className="minDonation">
+                        Minimum donation:
+                        <span> {fundraiserDetails.minDonation} Wei</span>
+                      </div>
+                      <div className="expiryDate">
+                        Expires on:
+                        <span> {toDate(fundraiserDetails.expiryDate)}</span>
+                      </div>
+                    </div>
+                    <input
+                      type="number"
+                      name="donationAmount"
+                      id="donationAmount"
+                      className="donationAmount"
+                      placeholder="Donation amount (Wei)"
+                      {...register("donationAmount", { required: true })}
+                    />
+                    {errors.donationAmount && (
+                      <span>This field is required</span>
+                    )}
 
-                <input type="submit" className="submit" value="DONATE" />
-              </form>
-            </div>
-          </div>
+                    <input type="submit" className="submit" value="DONATE" />
+                  </form>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     )

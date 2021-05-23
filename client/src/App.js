@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "./styles/app.scss"
 import Header from "./components/Header"
 import { Switch, Route, Redirect } from "react-router"
@@ -8,9 +8,18 @@ import Fundraisers from "./pages/Fundraisers/Fundraisers"
 import Track from "./pages/Track/Track"
 import Donate from "./pages/Donate/Donate"
 import NotFound404 from "./pages/NotFound404/NotFound404"
+import Loader from "./components/Loader"
 
-function App() {
-  return (
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <Header />
 
