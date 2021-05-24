@@ -22,7 +22,7 @@ function Track() {
         setIsLoading(false)
       } else {
         console.error("Invalid Address")
-        console.log(data)
+        // console.log(data)
         setResult()
       }
       setSearchBarValue(trackAddress)

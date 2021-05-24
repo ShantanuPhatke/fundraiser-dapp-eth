@@ -24,7 +24,7 @@ function Fundraisers() {
         _isExpired,
         _fundraiserBalance,
       } = response
-      console.log(response)
+      // console.log(response)
 
       let detailsObj = {
         title: _title,
