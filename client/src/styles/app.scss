@@ -494,3 +494,55 @@ section {
     font-weight: $semibold;
   }
 }
+
+.home-content {
+  text-align: center;
+  p {
+    font-size: 3rem;
+    color: $secondary-color-2;
+
+    span {
+      color: $primary-color;
+    }
+  }
+  h1 {
+    font-size: 7.5rem;
+    font-weight: $semibold;
+    line-height: 7.5rem;
+    text-transform: uppercase;
+    color: $secondary-color-1;
+  }
+
+  p,
+  p span,
+  h1 {
+    opacity: 0;
+    animation: fadeInUp 1s ease-in-out 0s forwards;
+  }
+
+  .first {
+    animation-delay: 0s;
+  }
+
+  .second {
+    animation-delay: 1s;
+  }
+
+  .third {
+    animation-delay: 2s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+}
