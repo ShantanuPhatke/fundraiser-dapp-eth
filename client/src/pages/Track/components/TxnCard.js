@@ -4,7 +4,7 @@ function TxnCard(props) {
   const { from, to, timeStamp, value } = props.txnDetails
 
   const getDate = (timestamp) => {
-    const dateObj = new Date(parseInt(timestamp))
+    const dateObj = new Date(parseInt(timestamp) * 1000)
     const date =
       dateObj.getDate() +
       "/" +
