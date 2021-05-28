@@ -14,16 +14,6 @@ contract FundraiserStore {
         return fundraisers;
     }
     
-    function getFundraiserGoal(Fundraiser _fundraiserId) view public returns(uint) {
-        for(uint i=0; i<fundraisers.length; i++) {
-            if(_fundraiserId == fundraisers[i]) {
-                Fundraiser _fundraiser = Fundraiser(fundraisers[i]);
-                return _fundraiser.getGoal();
-            }
-        }
-        return 0;
-    } 
-    
 }
 
 contract Fundraiser {
@@ -80,13 +70,13 @@ contract Fundraiser {
         }
     }
     
-    function getDetails() public payable returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress, bool _isExpired, uint _fundraiserBalance) {
+    function getDetails() public payable returns (uint _goalAmount, string memory _hostName, string memory _title, string memory _description, address _fundraiserAddress, uint _fundraiserBalance, uint _stage) {
         bool isExpired = isFundraiserExpired();
         if(isExpired) {
             stage = Stage.Expired;
             refundAll();
         }
-        return (goalAmount, hostName, title, description, address(this), isExpired, address(this).balance);
+        return (goalAmount, hostName, title, description, address(this), address(this).balance, uint(stage));
     }
     
     function getAllDetails() view public returns (uint _goalAmount, uint _minDonation, uint _donatorCount, uint256 _expiryDate, bool _isCompleted, string memory _hostName, string memory _title, string memory _description, address _hostAddress, address _recipientAddress, address _fundraiserAddress, uint _fundraiserBalance) {

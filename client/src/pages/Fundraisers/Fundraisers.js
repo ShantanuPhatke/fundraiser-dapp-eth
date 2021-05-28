@@ -21,8 +21,8 @@ function Fundraisers() {
         _goalAmount,
         _hostName,
         _fundraiserAddress,
-        _isExpired,
         _fundraiserBalance,
+        _stage,
       } = response
       // console.log(response)
 
@@ -32,8 +32,8 @@ function Fundraisers() {
         goalAmount: _goalAmount,
         hostName: _hostName,
         fundraiserAddress: _fundraiserAddress,
-        isExpired: _isExpired,
         fundraiserBalance: _fundraiserBalance,
+        stage: _stage,
       }
 
       return detailsObj
@@ -47,7 +47,7 @@ function Fundraisers() {
   }, [fundraisers, web3])
 
   const fundraiserCards = fundraiserDetails
-    .filter((fundraiser) => !fundraiser.isExpired)
+    .filter((fundraiser) => fundraiser.stage === "0")
     .map((fundraiser, i) => {
       // console.log(fundraiser)
       return (
