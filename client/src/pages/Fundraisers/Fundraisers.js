@@ -67,7 +67,15 @@ function Fundraisers() {
     <>
       <div className="container">
         <div className="card-grid">
-          {fundraiserCards.length === 0 ? <Loader /> : fundraiserCards}
+          {!web3 ? (
+            <a href="https://metamask.io/" target="_blank" rel="noreferrer">
+              MetaMask extension required
+            </a>
+          ) : fundraiserCards.length === 0 ? (
+            <Loader />
+          ) : (
+            fundraiserCards
+          )}
         </div>
       </div>
     </>

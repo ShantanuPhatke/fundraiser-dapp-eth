@@ -106,17 +106,22 @@ function CreateFundraiser() {
     updateFundraisers()
   }
 
-  if (
-    typeof web3 === "undefined" ||
-    typeof accounts === "undefined" ||
-    typeof contract === "undefined"
-  ) {
-    return <section>Loading...</section>
-  } else {
-    return (
-      <>
-        {isTxnLoading ? <TxnLoader /> : ""}
-        <div className="container">
+  // if (
+  //   typeof web3 === "undefined" ||
+  //   typeof accounts === "undefined" ||
+  //   typeof contract === "undefined"
+  // ) {
+  //   return <section>Loading...</section>
+  // } else {
+  return (
+    <>
+      {isTxnLoading ? <TxnLoader /> : ""}
+      <div className="container">
+        {!web3 ? (
+          <a href="https://metamask.io/" target="_blank" rel="noreferrer">
+            MetaMask extension required
+          </a>
+        ) : (
           <section>
             <h1>Create Fundraiser</h1>
             <form onSubmit={handleSubmit(onCreateSubmit)}>
@@ -206,10 +211,10 @@ function CreateFundraiser() {
               </div>
             </form>
           </section>
-        </div>
-      </>
-    )
-  }
+        )}
+      </div>
+    </>
+  )
 }
 
 export default CreateFundraiser
