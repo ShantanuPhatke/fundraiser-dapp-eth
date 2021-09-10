@@ -1,5 +1,6 @@
 # [fundraiser-dapp-eth](https://fundraiser-dapp.netlify.app/)
 
+
 A **Decentralized Fundraiser Application** developed in _Truffle_ framework and front-end in _ReactJS_.
 
 The application essentially provides a decentralized platform where users can Create Fundraisers by adding the required details and Donate to the existing Fundraisers. The donation amount is stored in the smart-contract till either the Goal set by the host is completed or the Expiry date set by the Host is passed. If the Goal amount is reached before the Expiry date, the collected funds are transferred to the Benificiary's address. Incase where the goal doesn't meet by the Expiry date, funds collected are refunded to the respective donors.
@@ -11,6 +12,10 @@ The application essentially provides a decentralized platform where users can Cr
 - [Metamask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en) is required to connect with the blockchain
 - User needs to have some Test Ethers from the Ropsten Test Network of Ethereum Blockchain to perform a transaction. You can get some free test etheres at [Metamask Faucet](https://faucet.metamask.io/)
 - The Track page uses [Etherscan API](https://etherscan.io/apis)
+
+### Demo 
+
+https://user-images.githubusercontent.com/48870803/132816901-81f73f37-0f7d-444e-b074-862271d82586.mp4
 
 ---
 
