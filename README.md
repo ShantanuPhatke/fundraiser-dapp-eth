@@ -8,7 +8,7 @@ The application essentially provides a decentralized platform where users can Cr
 - The smart-contracts are deployed on the _Ropsten Test Network_ of the **Ethereum blockchain**
 - Deployment to blockchain is done via [Infura](https://infura.io/)
 - [Truffle](https://www.trufflesuite.com/docs/truffle/overview) framework is used for local development
-- Front-end React application is deployed on [Netlify](https://www.netlify.com/) - https://fundraiser-dapp.netlify.app/
+- Frontend React application is deployed here - https://fundraiser-dapp.shan10u.com/
 - [Metamask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en) is required to connect with the blockchain
 - User needs to have some Test Ethers from the Ropsten Test Network of Ethereum Blockchain to perform a transaction. You can get some free test etheres at [Metamask Faucet](https://faucet.metamask.io/)
 - The Track page uses [Etherscan API](https://etherscan.io/apis)
